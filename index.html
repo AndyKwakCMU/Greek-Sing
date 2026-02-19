@@ -5,113 +5,138 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Greek Sing: Rehearsal Board</title>
     <style>
-        body { font-family: sans-serif; background: #1a1a1a; color: white; text-align: center; padding: 20px; max-width: 900px; margin: 0 auto; }
-        h1 { color: #4a90e2; }
-        h2 { border-bottom: 2px solid #333; padding-bottom: 10px; margin-top: 40px; }
-        
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 20px; }
-        
-        button { 
-            padding: 20px; font-size: 1.1rem; font-weight: bold; cursor: pointer;
-            border-radius: 12px; border: none; background: #4a90e2; color: white;
-            transition: transform 0.1s, background 0.2s;
-            display: flex; align-items: center; justify-content: center; min-height: 80px;
+        body { 
+            font-family: sans-serif; 
+            background: #121212; 
+            color: white; 
+            text-align: center; 
+            padding: 10px; 
+            margin: 0;
         }
-        button:active { transform: scale(0.95); background: #357abd; }
         
-        .inst-btn { background: #6c5ce7; } /* Different color for Instrumentals */
-        .stop-btn { background: #e94b3c; width: 100%; margin-top: 40px; padding: 40px; font-size: 2rem; border: 4px solid rgba(255,255,255,0.1); }
-        .stop-btn:hover { background: #ff5e4d; }
+        /* The Secret Sauce: 3x3 Grid */
+        .music-grid { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr 1fr; /* Exactly 3 columns */
+            gap: 10px; 
+            margin-bottom: 30px;
+            width: 100%;
+        }
+
+        button { 
+            padding: 25px 10px; 
+            font-size: 1.1rem; 
+            font-weight: bold; 
+            cursor: pointer;
+            border-radius: 8px; 
+            border: none; 
+            color: white;
+            transition: transform 0.1s, background 0.2s;
+            min-height: 90px; /* Big enough to tap easily */
+        }
+
+        /* Color Coding */
+        .vocal-btn { background: #4a90e2; }
+        .inst-btn { background: #6c5ce7; }
+        .sfx-btn { background: #27ae60; }
         
-        .sfx-grid { grid-template-columns: repeat(4, 1fr); }
-        .sfx { background: #27ae60; padding: 15px; font-size: 1rem; min-height: 60px; }
-        .sfx:active { background: #2ecc71; }
+        .stop-btn { 
+            background: #e94b3c; 
+            width: 100%; 
+            font-size: 2rem; 
+            margin: 20px 0; 
+            padding: 40px; 
+        }
+
+        .sfx-grid { 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 10px; 
+        }
+
+        h2 { margin-top: 30px; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        button:active { transform: scale(0.95); filter: brightness(1.2); }
     </style>
 </head>
 <body>
-    <h1>🎤 Greek Sing Rehearsal Board</h1>
+
+    <h1>🎤 Greek Sing Control</h1>
     
-    <button class="stop-btn" onclick="stopAll()">🛑 STOP EVERYTHING</button>
+    <button class="stop-btn" onclick="stopAll()">🛑 STOP ALL</button>
 
     <h2>The Setlist (Vocals)</h2>
-    <div class="grid">
-        <button onclick="playAudio('Surf Crazy 3 ')">1. Surf Crazy</button>
-        <button onclick="playAudio('Crusin For A Brusin')">2. Crusin For A Brusin</button>
-        <button onclick="playAudio('Fallin for Ya')">3. Fallin for Ya</button>
-        <button onclick="playAudio('Like Me')">4. Like Me</button>
-        <button onclick="playAudio('Meant to Be')">5. Meant To Be</button>
-        <button onclick="playAudio('Surfs Up')">6. Surf's Up</button>
+    <div class="music-grid">
+        <button class="vocal-btn" onclick="playAudio('Surf Crazy 3 ')">Surf Crazy</button>
+        <button class="vocal-btn" onclick="playAudio('Crusin For A Brusin')">Crusin</button>
+        <button class="vocal-btn" onclick="playAudio('Fallin for Ya')">Fallin</button>
+        <button class="vocal-btn" onclick="playAudio('Like Me')">Like Me</button>
+        <button class="vocal-btn" onclick="playAudio('Meant to Be')">Meant To Be</button>
+        <button class="vocal-btn" onclick="playAudio('Surfs Up')">Surf's Up</button>
     </div>
 
     <h2>Instrumentals</h2>
-    <div class="grid">
-        <button class="inst-btn" onclick="playAudio('Surf Crazy 3 Inst')">1. Surf Crazy (Inst)</button>
-        <button class="inst-btn" onclick="playAudio('Crusin For A Brusin Inst')">2. Crusin For A Brusin (Inst)</button>
-        <button class="inst-btn" onclick="playAudio('Fallin for Ya Inst')">3. Fallin for Ya (Inst)</button>
-        <button class="inst-btn" onclick="playAudio('Like Me Inst')">4. Like Me (Inst)</button>
-        <button class="inst-btn" onclick="playAudio('Meant to Be Inst')">5. Meant To Be (Inst)</button>
-        <button class="inst-btn" onclick="playAudio('Surfs Up Inst')">6. Surf's Up (Inst)</button>
+    <div class="music-grid">
+        <button class="inst-btn" onclick="playAudio('Surf Crazy 3 Inst')">Surf Crazy</button>
+        <button class="inst-btn" onclick="playAudio('Crusin For A Brusin Inst')">Crusin</button>
+        <button class="inst-btn" onclick="playAudio('Fallin for Ya Inst')">Fallin</button>
+        <button class="inst-btn" onclick="playAudio('Like Me Inst')">Like Me</button>
+        <button class="inst-btn" onclick="playAudio('Meant to Be Inst')">Meant To Be</button>
+        <button class="inst-btn" onclick="playAudio('Surfs Up Inst')">Surf's Up</button>
     </div>
 
-    <h3>Sound Effects</h3>
-    <div class="grid sfx-grid">
-        <button class="sfx" onclick="playSFX('fulcrum-plug')">Pluh</button>
-        <button class="sfx" onclick="playSFX('Laugh')">Laugh</button>
-        <button class="sfx" onclick="playSFX('rizz-sound-effect')">Rizz</button>
-        <button class="sfx" onclick="playSFX('Vine Boom')">Vine Boom</button>
+    <h2>Sound Effects</h2>
+    <div class="sfx-grid">
+        <button class="sfx-btn" onclick="playSFX('fulcrum-plug')">Pluh</button>
+        <button class="sfx-btn" onclick="playSFX('Laugh')">Laugh</button>
+        <button class="sfx-btn" onclick="playSFX('rizz-sound-effect')">Rizz</button>
+        <button class="sfx-btn" onclick="playSFX('Vine Boom')">Vine Boom</button>
     </div>
 
     <script>
- let currentAudio = null;
-    let activeSFX = []; 
-    let lastClickTime = 0;
+        let currentAudio = null;
+        let activeSFX = [];
+        let lastClickTime = 0;
+        const sfxCache = {};
 
-    // This "pre-caches" the sounds so they play INSTANTLY and don't glitch
-    const sfxCache = {};
-
-    function playAudio(file) {
-        if (currentAudio) {
-        currentAudio.pause();
-        currentAudio.currentTime = 0;
-        }
-        currentAudio = new Audio(`assets/${file}.mp3`);
-        currentAudio.play().catch(e => console.log("Audio blocked"));
+        function playAudio(file) {
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+            }
+            currentAudio = new Audio(`assets/${file}.mp3`);
+            currentAudio.play();
         }
 
         function playSFX(effectName) {
-        const now = Date.now();
-        if (now - lastClickTime < 100) return; // Ignore accidental double-taps
-        lastClickTime = now;
+            const now = Date.now();
+            if (now - lastClickTime < 100) return; // SPAM SHIELD
+            lastClickTime = now;
 
-        // If we haven't loaded this sound yet, create it
-        if (!sfxCache[effectName]) {
-        sfxCache[effectName] = new Audio(`assets/sfx/${effectName}.mp3`);
-        }
+            if (!sfxCache[effectName]) {
+                sfxCache[effectName] = new Audio(`assets/sfx/${effectName}.mp3`);
+            }
 
-        // Clone the sound so we can spam it without the "4-times" glitch
-        let shot = sfxCache[effectName].cloneNode();
-
-        // Ensure it doesn't loop
-        shot.loop = false; 
-
-        activeSFX.push(shot);
-        shot.onended = () => {
-        activeSFX = activeSFX.filter(item => item !== shot);
-        };
-
-        shot.play().catch(e => console.log("SFX blocked"));
+            let shot = sfxCache[effectName].cloneNode();
+            shot.loop = false;
+            activeSFX.push(shot);
+            
+            shot.onended = () => {
+                activeSFX = activeSFX.filter(item => item !== shot);
+            };
+            
+            shot.play();
         }
 
         function stopAll() {
-        if (currentAudio) {
-        currentAudio.pause();
-        currentAudio.currentTime = 0;
-        }
-        activeSFX.forEach(sound => {
-        sound.pause();
-        sound.currentTime = 0;
-        });
-        activeSFX = [];
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+            }
+            activeSFX.forEach(s => {
+                s.pause();
+                s.currentTime = 0;
+            });
+            activeSFX = [];
         }
     </script>
 </body>
