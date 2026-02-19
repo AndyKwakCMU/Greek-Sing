@@ -62,44 +62,56 @@
     </div>
 
     <script>
-        let currentAudio = null;
-        let activeSFX = []; 
-        let lastClickTime = 0;
+ let currentAudio = null;
+    let activeSFX = []; 
+    let lastClickTime = 0;
 
-        function playAudio(file) {
-            if (currentAudio) {
-                currentAudio.pause();
-                currentAudio.currentTime = 0;
-            }
-            currentAudio = new Audio(`assets/${file}.mp3`);
-            currentAudio.play().catch(e => console.log("Audio play blocked: ", e));
+    // This "pre-caches" the sounds so they play INSTANTLY and don't glitch
+    const sfxCache = {};
+
+    function playAudio(file) {
+        if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+        }
+        currentAudio = new Audio(`assets/${file}.mp3`);
+        currentAudio.play().catch(e => console.log("Audio blocked"));
         }
 
         function playSFX(effectName) {
-            const now = Date.now();
-            if (now - lastClickTime < 100) return; 
-            lastClickTime = now;
+        const now = Date.now();
+        if (now - lastClickTime < 100) return; // Ignore accidental double-taps
+        lastClickTime = now;
 
-            let sfx = new Audio(`assets/sfx/${effectName}.mp3`);
-            activeSFX.push(sfx);
-            
-            sfx.onended = () => {
-                activeSFX = activeSFX.filter(item => item !== sfx);
-            };
-            
-            sfx.play().catch(e => console.log("SFX play blocked: ", e));
+        // If we haven't loaded this sound yet, create it
+        if (!sfxCache[effectName]) {
+        sfxCache[effectName] = new Audio(`assets/sfx/${effectName}.mp3`);
+        }
+
+        // Clone the sound so we can spam it without the "4-times" glitch
+        let shot = sfxCache[effectName].cloneNode();
+
+        // Ensure it doesn't loop
+        shot.loop = false; 
+
+        activeSFX.push(shot);
+        shot.onended = () => {
+        activeSFX = activeSFX.filter(item => item !== shot);
+        };
+
+        shot.play().catch(e => console.log("SFX blocked"));
         }
 
         function stopAll() {
-            if (currentAudio) {
-                currentAudio.pause();
-                currentAudio.currentTime = 0;
-            }
-            activeSFX.forEach(sound => {
-                sound.pause();
-                sound.currentTime = 0;
-            });
-            activeSFX = [];
+        if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+        }
+        activeSFX.forEach(sound => {
+        sound.pause();
+        sound.currentTime = 0;
+        });
+        activeSFX = [];
         }
     </script>
 </body>
