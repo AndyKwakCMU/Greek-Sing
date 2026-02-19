@@ -19,7 +19,6 @@
         }
         button:active { transform: scale(0.95); background: #357abd; }
         
-        /* Specific Styles */
         .inst-btn { background: #6c5ce7; } /* Different color for Instrumentals */
         .stop-btn { background: #e94b3c; width: 100%; margin-top: 40px; padding: 40px; font-size: 2rem; border: 4px solid rgba(255,255,255,0.1); }
         .stop-btn:hover { background: #ff5e4d; }
@@ -77,12 +76,9 @@
         }
 
         function playSFX(effectName) {
-            // --- SPAM SHIELD ---
-            // If the last click was less than 100ms ago, ignore this one.
             const now = Date.now();
             if (now - lastClickTime < 100) return; 
             lastClickTime = now;
-            // -------------------
 
             let sfx = new Audio(`assets/sfx/${effectName}.mp3`);
             activeSFX.push(sfx);
